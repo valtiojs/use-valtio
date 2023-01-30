@@ -1,5 +1,5 @@
 import { useEffect, useReducer } from 'react';
-import type { ReducerWithoutAction } from 'react';
+import type { DispatchWithoutAction, Reducer } from 'react';
 import { subscribe, snapshot } from 'valtio/vanilla';
 
 type AsRef = { $$valtioRef: true };
@@ -31,6 +31,9 @@ const get = <T extends object, Path extends readonly unknown[]>(
   return result;
 };
 
+// HACK the second parameter for snapshot() to path through promise
+const handlePromise = <T>(x: Promise<T>) => x as unknown as T;
+
 export function useValtio<State extends object>(proxy: State): Snapshot<State>;
 
 export function useValtio<
@@ -42,36 +45,39 @@ export function useValtio<
   State extends object,
   Path extends readonly unknown[],
 >(proxy: State, path: Path = [] as any) {
-  const getSlice = () =>
-    get(
-      // HACK the second parameter is to avoid handling promise
-      snapshot(proxy, (x) => x as any),
-      path,
-    );
-  type Result = ReturnType<typeof getSlice>;
+  const slice = get(snapshot(proxy, handlePromise), path);
   const [[sliceFromReducer, proxyFromReducer], rerender] = useReducer<
-    ReducerWithoutAction<readonly [Result, State]>,
+    Reducer<readonly [typeof slice, State], boolean | undefined>,
     undefined
   >(
-    (prev) => {
-      const nextSlice = getSlice();
+    (prev, fromSelf?: boolean) => {
+      if (fromSelf) {
+        return [slice, proxy];
+      }
+      const nextSlice = get(snapshot(proxy, handlePromise), path);
       if (Object.is(prev[0], nextSlice) && prev[1] === proxy) {
         return prev;
       }
       return [nextSlice, proxy];
     },
     undefined,
-    () => [getSlice(), proxy],
+    () => [slice, proxy],
   );
   useEffect(() => {
-    const unsubscribe = subscribe(proxy, rerender, true);
-    rerender();
+    const unsubscribe = subscribe(
+      proxy,
+      rerender as DispatchWithoutAction,
+      true,
+    );
+    (rerender as DispatchWithoutAction)();
     return unsubscribe;
   }, [proxy]);
-  let slice = sliceFromReducer;
   if (proxyFromReducer !== proxy) {
-    rerender();
-    slice = getSlice();
+    rerender(true);
+    return slice;
   }
-  return slice;
+  if (!Object.is(sliceFromReducer, slice)) {
+    rerender(true);
+  }
+  return sliceFromReducer;
 }
