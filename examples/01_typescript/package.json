@@ -9,8 +9,8 @@
     "react-dom": "experimental",
     "react-scripts": "latest",
     "typescript": "latest",
-    "use-valito": "latest",
-    "valito": "latest"
+    "use-valtio": "latest",
+    "valtio": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
