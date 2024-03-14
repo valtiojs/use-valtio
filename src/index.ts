@@ -7,8 +7,8 @@ import { createProxy, isChanged } from 'proxy-compare';
 const targetCache = new WeakMap();
 
 export function useValtio<State extends object>(proxy: State): Snapshot<State> {
-  // per-hook affected, it's not ideal but memo compatible
-  const affected = useMemo(() => new WeakMap<object, unknown>(), []);
+  // per-proxy & per-hook affected, it's not ideal but memo compatible
+  const affected = useMemo(() => new WeakMap<object, unknown>(), [proxy]);
   const [[snapshotFromReducer, proxyFromReducer], rerender] = useReducer<
     ReducerWithoutAction<readonly [Snapshot<State>, State]>,
     undefined
