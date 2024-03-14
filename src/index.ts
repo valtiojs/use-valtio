@@ -6,15 +6,7 @@ import { createProxy, isChanged } from 'proxy-compare';
 
 const targetCache = new WeakMap();
 
-type Options = {
-  sync?: boolean;
-};
-
-export function useValtio<State extends object>(
-  proxy: State,
-  options?: Options,
-): Snapshot<State> {
-  const notifyInSync = options?.sync;
+export function useValtio<State extends object>(proxy: State): Snapshot<State> {
   // per-hook affected, it's not ideal but memo compatible
   const affected = useMemo(() => new WeakMap<object, unknown>(), []);
   const [[snapshotFromReducer, proxyFromReducer], rerender] = useReducer<
@@ -41,10 +33,10 @@ export function useValtio<State extends object>(
     snapshotToReturn = snapshot(proxy);
   }
   useEffect(() => {
-    const unsubscribe = subscribe(proxy, rerender, notifyInSync);
+    const unsubscribe = subscribe(proxy, rerender, true);
     rerender();
     return unsubscribe;
-  }, [proxy, notifyInSync]);
+  }, [proxy]);
   const proxyCache = useMemo(() => new WeakMap(), []); // per-hook proxyCache
   return createProxy(snapshotToReturn, affected, proxyCache, targetCache);
 }
