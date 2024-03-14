@@ -1,6 +1,8 @@
 # Change Log
 
 ## [Unreleased]
+
+## [0.1.0] - 2024-03-14
 ### Added
 - feat: usage tracking like useSnapshot #7
 
