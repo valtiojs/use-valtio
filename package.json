@@ -46,9 +46,9 @@
     "suspense"
   ],
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
     "@types/jest": "^29.2.6",
+    "@types/node": "^20.11.27",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@typescript-eslint/eslint-plugin": "^5.48.2",
@@ -66,8 +66,8 @@
     "microbundle": "^0.15.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.3",
-    "react": "^0.0.0-experimental-ee8509801-20230117",
-    "react-dom": "^0.0.0-experimental-ee8509801-20230117",
+    "react": "18.3.0-canary-bb0944fe5-20240313",
+    "react-dom": "18.3.0-canary-bb0944fe5-20240313",
     "ts-jest": "^29.0.5",
     "ts-loader": "^9.4.2",
     "typescript": "^4.9.4",
