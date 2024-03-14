@@ -59,7 +59,7 @@ By default, `useSnapshot` works with "sync=false".
 
 ```js
 const { count } = useValtio(state);
-// That :point_up: is equivalent to this :point_down:.
+// That 👆 is equivalent to this 👇.
 const { count } = useSnapshot(state, { sync: true });
 ```
 
