@@ -1,4 +1,4 @@
-/// <reference types="react/experimental" />
+/// <reference types="react/canary" />
 
 import React, { Suspense, use, useTransition } from 'react';
 
