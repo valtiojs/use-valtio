@@ -7,20 +7,20 @@ type AnyFunction = (...args: any[]) => any;
 type Snapshot<T> = T extends AnyFunction
   ? T
   : T extends AsRef
-  ? T
-  : {
-      readonly [K in keyof T]: Snapshot<T[K]>;
-    };
+    ? T
+    : {
+        readonly [K in keyof T]: Snapshot<T[K]>;
+      };
 
 type Resolve<T, Path extends readonly unknown[]> = Path extends []
   ? T
   : Path extends [infer Head, ...infer Tail]
-  ? Head extends keyof T
-    ? Resolve<T[Head], Tail>
-    : never
-  : never;
+    ? Head extends keyof T
+      ? Resolve<T[Head], Tail>
+      : never
+    : never;
 
-const get = <T extends object, Path extends readonly unknown[]>(
+const get = <T, Path extends readonly unknown[]>(
   obj: T,
   path: Path,
 ): Resolve<T, Path> => {
