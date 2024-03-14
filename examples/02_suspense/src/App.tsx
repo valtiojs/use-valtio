@@ -20,8 +20,7 @@ const postState = proxy({
 });
 
 const Post = () => {
-  // FIXME how can we avoid type assertion?
-  const post = use(useValtio(postState, ['post'] as ['post']));
+  const post = use(useValtio(postState).post);
   return (
     <ul>
       <li>ID: {post.id}</li>

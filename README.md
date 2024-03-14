@@ -53,17 +53,14 @@ It suffers from tearing, but works better with concurrent rendering.
 
 After all, it's a trade-off.
 
-There's a drawback (but it can be a benefit) with `useValtio`.
-Unlike `useSnapshot`, `useValtio` doesn't have usage tracking capability.
+There's one caveat in `useValtio`.
+To make it work with transitions, it forces "sync=true".
+By default, `useSnapshot` works with "sync=false".
 
 ```js
-const state = proxy({ count: 0, text: 'hello' });
-
-// This trigger re-renders if state.text changes
 const { count } = useValtio(state);
-
-// To mitigate it, it accepts path list
-const count = useValtio(state, ['count']);
+// That :point_up: is equivalent to this :point_down:.
+const { count } = useSnapshot(state, { sync: true });
 ```
 
 ## Examples

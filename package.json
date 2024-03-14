@@ -46,6 +46,9 @@
     "suspense"
   ],
   "license": "MIT",
+  "dependencies": {
+    "proxy-compare": "2.6.0"
+  },
   "devDependencies": {
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.27",
@@ -66,18 +69,18 @@
     "microbundle": "^0.15.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.2.5",
-    "react": "18.3.0-canary-bb0944fe5-20240313",
-    "react-dom": "18.3.0-canary-bb0944fe5-20240313",
+    "react": "^18.3.0-canary-bb0944fe5-20240313",
+    "react-dom": "^18.3.0-canary-bb0944fe5-20240313",
     "ts-jest": "^29.1.2",
     "ts-loader": "^9.5.1",
     "typescript": "^5.4.2",
-    "valtio": "^1.13.2",
+    "valtio": "^2.0.0-beta.1",
     "webpack": "^5.90.3",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.3"
   },
   "peerDependencies": {
     "react": "*",
-    "valtio": ">=1.9.0"
+    "valtio": ">=2.0.0-beta.1"
   }
 }
