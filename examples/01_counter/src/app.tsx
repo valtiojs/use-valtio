@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { proxy } from 'valtio/vanilla';
 import { useValtio } from 'use-valtio';
 
