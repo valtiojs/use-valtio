@@ -1,6 +1,6 @@
 /// <reference types="react/canary" />
 
-import React, { Suspense, use, useTransition } from 'react';
+import { Suspense, use, useTransition } from 'react';
 
 import { proxy } from 'valtio/vanilla';
 import { useValtio } from 'use-valtio';
