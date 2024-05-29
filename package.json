@@ -1,7 +1,7 @@
 {
   "name": "use-valtio",
   "description": "Another custom hook to use Valtio proxy state",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "author": "Daishi Kato",
   "repository": {
