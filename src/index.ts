@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useReducer } from 'react';
-import type { ReducerWithoutAction } from 'react';
 import { subscribe, snapshot } from 'valtio/vanilla';
 import type { Snapshot } from 'valtio/vanilla';
 import { createProxy, isChanged } from 'proxy-compare';
@@ -8,11 +7,13 @@ const targetCache = new WeakMap();
 
 export function useValtio<State extends object>(proxy: State): Snapshot<State> {
   // per-proxy & per-hook affected, it's not ideal but memo compatible
+  // eslint-disable-next-line react-compiler/react-compiler
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const affected = useMemo(() => new WeakMap<object, unknown>(), [proxy]);
   const [[snapshotFromReducer, proxyFromReducer], rerender] = useReducer<
-    ReducerWithoutAction<readonly [Snapshot<State>, State]>,
-    undefined
+    readonly [Snapshot<State>, State],
+    undefined,
+    []
   >(
     (prev) => {
       const nextSnapshot = snapshot(proxy);
